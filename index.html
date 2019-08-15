@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Calculator</title>
+        <link rel=stylesheet href="style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+        var memory=0;
+        var memorycalc;
+        var c=false;
+        var flag=false;
+        var screen =function(p){
+            if(p=='.' && flag==true){
+                return;
+            }
+            if(c==true){
+                $('#screen').val('');
+                c=false;
+            }
+            var r=$('#screen').val('')+p;
+            if(p=='.'){
+                flag=true;
+            }else{
+                r=r*1;
+            }
+            $('#screen').val('');
+        }
+        var calculate=function(p){
+            if(memory){
+                result();
+            }
+            flag=false;
+            c=true;
+            memory=$('#screen').val('');
+            memorycalc=p;
+        }
+        $('#clear').click(function(){
+            memory=0;
+            $('#screen').val('');
+        });
+        $('#sign').click(function(){
+            $('#screen').val($('#screen').val()* -1 );
+         });
+         $('#backspace').click(function(){
+             var len =$('#screen').val().length;
+             $('#screen').val($('#screen').val().substring(0,len -1));
+             $('#screen').val(0);
+         });
+         var result=function(){
+             if(memory ==0)
+             return;
+             c=true;
+             var r;
+             switch(memorycalc){
+                 case'+':
+                 r=memory+$('#screen').val();
+                 break;
+                 case'-':
+                 r=memory-$('#screen').val();
+                 break;
+                 case'*':
+                 r=memory*$('#screen').val();
+                 break;
+                 case'/':
+                 r=memory/$('#screen').val();
+                 break;
+                   }
+                   screen(r);
+                   c=true;
+                   flag=false;
+                   memory=0;
+         };
+         $('.digit').click(function(e){
+             screen(e.target.value);
+        });
+        $('#divide,#multiply,#minus,#plus').click(function(e){
+             calculate(e.target.value);
+        });
+        $('#equal').click(function(){
+            result();
+        });
+        
+        
+
+
+        </script>
+    </head>
+
+
+
+    <body><div class="calc">
+        <h1>Calculator</h1>
+    </div>
+        <div class="Calculator">
+        <input type="screen" id="screen" value="0" />
+        <div class="buttons">
+            <button id="clear" value="">C</button>
+            <button id="backspace" value="◄">&#8592</button>
+            <button id="sign" value="-+">&#177</button>
+            <button id="divide" value="/">&#247</button>
+            <button class="digits" value="7">7</button>
+            <button class="digits" value="8">8</button>
+            <button class="digits" value="9">9</button>
+            <button id="multiply" value="*">x</button>
+            <button class="digits" value="4">4</button>
+            <button class="digits" value="5">5</button>
+            <button class="digits" value="6">6</button>
+            <button id="minus" value="-">-</button>
+            <button class="digits" value="1">1</button>
+            <button class="digits" value="2">2</button>
+            <button class="digits" value="3">3</button>
+            <button id="plus" value="+">+</button>
+            <button class="digits" value="0">0</button>
+            <button class="digits" value=".">.</button>
+            <button id="equal" value="=">=</button>
+        </div>
+        </div>
+    </body>
+</html>
